@@ -1,0 +1,10 @@
+streamlit==1.31.0
+pandas==2.1.4
+numpy==1.26.3
+ortools==9.8.3296
+folium==0.15.1
+streamlit-folium==0.18.0
+plotly==5.18.0
+openpyxl==3.1.2
+geopy==2.4.1
+

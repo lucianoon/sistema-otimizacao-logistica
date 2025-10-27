@@ -1,0 +1,18 @@
+nome,latitude,longitude,demanda
+Depósito Central,-23.5505,-46.6333,0
+Cliente 1 - Zona Norte,-23.5200,-46.6300,15
+Cliente 2 - Zona Sul,-23.6100,-46.6500,20
+Cliente 3 - Zona Leste,-23.5500,-46.5800,18
+Cliente 4 - Zona Oeste,-23.5400,-46.7000,12
+Cliente 5 - Centro,-23.5470,-46.6361,25
+Cliente 6 - Mooca,-23.5650,-46.5950,10
+Cliente 7 - Vila Mariana,-23.5880,-46.6350,22
+Cliente 8 - Pinheiros,-23.5670,-46.6820,16
+Cliente 9 - Santana,-23.5050,-46.6290,14
+Cliente 10 - Ipiranga,-23.5930,-46.6100,19
+Cliente 11 - Tatuapé,-23.5400,-46.5750,17
+Cliente 12 - Lapa,-23.5280,-46.7050,13
+Cliente 13 - Penha,-23.5350,-46.5420,21
+Cliente 14 - Butantã,-23.5730,-46.7100,11
+Cliente 15 - Vila Prudente,-23.5900,-46.5800,24
+
