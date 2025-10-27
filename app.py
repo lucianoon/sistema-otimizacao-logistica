@@ -138,8 +138,103 @@ def load_data():
     
     else:  # Entrada Manual
         st.sidebar.subheader("✏️ Entrada Manual")
-        st.sidebar.info("Funcionalidade em desenvolvimento. Use 'Dados de Exemplo' ou 'Upload CSV'.")
-        return None
+        
+        # Inicializar session state para entrada manual
+        if 'manual_locations' not in st.session_state:
+            st.session_state.manual_locations = []
+        
+        # Depósito
+        st.sidebar.markdown("**Depósito (Ponto de Partida)**")
+        
+        depot_name = st.sidebar.text_input(
+            "Nome do Depósito:",
+            value="Depósito Central",
+            key="depot_name"
+        )
+        
+        col1, col2 = st.sidebar.columns(2)
+        with col1:
+            depot_lat = st.number_input(
+                "Latitude:",
+                value=-23.5505,
+                format="%.6f",
+                key="depot_lat"
+            )
+        with col2:
+            depot_lon = st.number_input(
+                "Longitude:",
+                value=-46.6333,
+                format="%.6f",
+                key="depot_lon"
+            )
+        
+        st.sidebar.markdown("---")
+        st.sidebar.markdown("**Adicionar Clientes**")
+        
+        # Formulário para adicionar cliente
+        with st.sidebar.form(key="add_location_form", clear_on_submit=True):
+            client_name = st.text_input("Nome do Cliente:", value="")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                client_lat = st.number_input("Latitude:", value=-23.5500, format="%.6f")
+            with col2:
+                client_lon = st.number_input("Longitude:", value=-46.6300, format="%.6f")
+            
+            client_demand = st.number_input("Demanda (opcional):", value=0, min_value=0)
+            
+            submit_button = st.form_submit_button("➕ Adicionar Cliente")
+            
+            if submit_button and client_name:
+                st.session_state.manual_locations.append({
+                    'nome': client_name,
+                    'latitude': client_lat,
+                    'longitude': client_lon,
+                    'demanda': client_demand
+                })
+                st.success(f"Cliente '{client_name}' adicionado!")
+        
+        # Mostrar clientes adicionados
+        if st.session_state.manual_locations:
+            st.sidebar.markdown(f"**Clientes Adicionados: {len(st.session_state.manual_locations)}**")
+            
+            # Botão para limpar todos
+            if st.sidebar.button("🗑️ Limpar Todos os Clientes"):
+                st.session_state.manual_locations = []
+                st.rerun()
+            
+            # Mostrar lista de clientes com opção de remover
+            with st.sidebar.expander("📋 Ver Clientes"):
+                for idx, loc in enumerate(st.session_state.manual_locations):
+                    col1, col2 = st.columns([3, 1])
+                    with col1:
+                        st.text(f"{idx+1}. {loc['nome']}")
+                    with col2:
+                        if st.button("❌", key=f"remove_{idx}"):
+                            st.session_state.manual_locations.pop(idx)
+                            st.rerun()
+        
+        # Preparar dados se houver clientes
+        if st.session_state.manual_locations:
+            # Criar listas
+            all_names = [depot_name] + [loc['nome'] for loc in st.session_state.manual_locations]
+            all_locations = [(depot_lat, depot_lon)] + [(loc['latitude'], loc['longitude']) for loc in st.session_state.manual_locations]
+            
+            # Verificar se há demandas
+            has_demands = any(loc['demanda'] > 0 for loc in st.session_state.manual_locations)
+            all_demands = None
+            
+            if has_demands:
+                all_demands = [0] + [loc['demanda'] for loc in st.session_state.manual_locations]
+            
+            return {
+                'locations': all_locations,
+                'names': all_names,
+                'demands': all_demands
+            }
+        else:
+            st.sidebar.info("📍 Adicione pelo menos 1 cliente para começar.")
+            return None
 
 # Carregar dados
 data = load_data()
