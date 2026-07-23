@@ -2,6 +2,7 @@
 
 Sistema completo de otimização de rotas de veículos (VRP - Vehicle Routing Problem) desenvolvido em Python com interface Streamlit, adaptado para resolver problemas reais de logística no Brasil.
 
+[![CI](https://github.com/lucianoon/sistema-otimizacao-logistica/actions/workflows/ci.yml/badge.svg)](https://github.com/lucianoon/sistema-otimizacao-logistica/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.31-red)
 ![OR-Tools](https://img.shields.io/badge/OR--Tools-9.8-green)
@@ -15,6 +16,7 @@ Sistema completo de otimização de rotas de veículos (VRP - Vehicle Routing Pr
 - [Instalação](#instalação)
 - [Como Usar](#como-usar)
 - [Estrutura do Projeto](#estrutura-do-projeto)
+- [Testes](#testes)
 - [Exemplos](#exemplos)
 - [Casos de Uso](#casos-de-uso)
 - [Contribuindo](#contribuindo)
@@ -225,6 +227,17 @@ sistema_otimizacao_logistica/
 │
 └── utils/                      # Utilitários
     └── helpers.py
+```
+
+## 🧪 Testes
+
+O projeto possui uma suíte de testes automatizados com **pytest** em `tests/`, cobrindo o cálculo de custos, a manipulação de dados, a heurística Nearest Neighbor e o otimizador OR-Tools. Os testes rodam automaticamente no GitHub Actions a cada push e pull request.
+
+Para rodar localmente:
+
+```bash
+pip install -r requirements.txt pytest
+pytest
 ```
 
 ## 💡 Exemplos
