@@ -37,12 +37,12 @@ No contexto brasileiro, empresas enfrentam desafios como:
 - **Custos de combustível elevados**: Preços voláteis e altos
 - **Pedágios**: Custos significativos em rotas interestaduais
 
-Este sistema ajuda a:
-✅ Reduzir distâncias percorridas
-✅ Diminuir custos operacionais
-✅ Otimizar uso da frota
-✅ Reduzir emissões de CO2
-✅ Melhorar tempo de entrega
+O sistema permite:
+
+- comparar rotas e buscar uma solução de menor distância para o cenário informado;
+- estimar custos operacionais com parâmetros explícitos;
+- melhorar a utilização da frota respeitando capacidade e distância máxima;
+- analisar distância, carga, custo e emissões.
 
 O ganho depende inteiramente da instância. Rode
 [`compare_algorithms.py`](compare_algorithms.py) para medir no seu próprio
@@ -420,4 +420,3 @@ Para dúvidas, sugestões ou suporte:
 ---
 
 **Desenvolvido com ❤️ para melhorar a logística no Brasil** 🇧🇷
-
