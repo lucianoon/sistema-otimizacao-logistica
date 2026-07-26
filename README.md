@@ -1,10 +1,8 @@
-# 🚚 Logistics Optimization System for Brazil
+# 🚚 Sistema de Otimização Logística para o Brasil
 
-*[Versão em português](README.pt-BR.md)*
+Sistema completo de otimização de rotas de veículos (VRP - Vehicle Routing Problem) desenvolvido em Python com interface Streamlit, adaptado para resolver problemas reais de logística no Brasil.
 
-A complete vehicle routing (VRP — Vehicle Routing Problem) optimization system
-built in Python with a Streamlit interface, adapted to real logistics problems
-in Brazil.
+*[English version](README.en.md)*
 
 [![CI](https://github.com/lucianoon/sistema-otimizacao-logistica/actions/workflows/ci.yml/badge.svg)](https://github.com/lucianoon/sistema-otimizacao-logistica/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
@@ -12,157 +10,150 @@ in Brazil.
 ![OR-Tools](https://img.shields.io/badge/OR--Tools-9.8-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 📋 Table of contents
+## 📋 Índice
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech stack](#️-tech-stack)
-- [Installation](#-installation)
-- [How to use](#-how-to-use)
-- [Project structure](#-project-structure)
-- [Tests](#-tests)
-- [Worked examples](#-worked-examples)
-- [Use cases](#-use-cases)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [Visão Geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Instalação](#instalação)
+- [Como Usar](#como-usar)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Testes](#testes)
+- [Exemplos](#exemplos)
+- [Casos de Uso](#casos-de-uso)
+- [Contribuindo](#contribuindo)
+- [Licença](#licença)
 
-## 🎯 Overview
+## 🎯 Visão Geral
 
-This system solves the **Vehicle Routing Problem (VRP)**, one of the most
-important problems in logistics and combinatorial optimization. The goal is to
-find the most efficient routes for a fleet that has to serve a set of
-customers, minimizing operating cost and maximizing efficiency.
+Este sistema resolve o **Problema de Roteamento de Veículos (VRP)**, um dos problemas mais importantes em logística e otimização combinatória. O objetivo é encontrar as rotas mais eficientes para uma frota de veículos que precisa atender um conjunto de clientes, minimizando custos operacionais e maximizando a eficiência.
 
-### The problem it addresses
+### Problema que Resolve
 
-In the Brazilian context, companies face challenges such as:
+No contexto brasileiro, empresas enfrentam desafios como:
+- **Altos custos logísticos**: Brasil tem um dos custos logísticos mais altos do mundo
+- **Infraestrutura precária**: Rodovias em más condições aumentam custos de manutenção
+- **Grandes distâncias**: País continental com rotas longas de distribuição
+- **Custos de combustível elevados**: Preços voláteis e altos
+- **Pedágios**: Custos significativos em rotas interestaduais
 
-- **High logistics costs**: Brazil has some of the highest logistics costs in the world
-- **Poor infrastructure**: roads in bad condition drive maintenance costs up
-- **Long distances**: a continental country with long distribution routes
-- **High fuel costs**: volatile and expensive
-- **Tolls**: a significant cost on interstate routes
+Este sistema ajuda a:
+✅ Reduzir distâncias percorridas
+✅ Diminuir custos operacionais
+✅ Otimizar uso da frota
+✅ Reduzir emissões de CO2
+✅ Melhorar tempo de entrega
 
-The system is built to help:
+O ganho depende inteiramente da instância. Rode
+[`compare_algorithms.py`](compare_algorithms.py) para medir no seu próprio
+cenário em vez de confiar em um percentual de manchete.
 
-✅ Reduce distance travelled
-✅ Cut operating costs
-✅ Improve fleet utilization
-✅ Reduce CO2 emissions
-✅ Improve delivery times
+## ✨ Funcionalidades
 
-How much it helps depends entirely on the instance. Run
-[`compare_algorithms.py`](compare_algorithms.py) to measure the gain on your own
-data instead of trusting a headline percentage.
+### Otimização de Rotas
+- Algoritmos avançados do Google OR-Tools
+- Suporte a múltiplos veículos
+- Restrições de capacidade (CVRP)
+- Minimização de distância total ou maior rota
+- Múltiplas estratégias de busca
 
-## ✨ Features
+### Cálculo de Custos
+- **Combustível**: Baseado em preços brasileiros atuais
+- **Motorista**: Custo por hora de trabalho
+- **Depreciação**: Desgaste do veículo
+- **Pedágios**: Estimativa baseada em distância
+- **Operacional**: Custos de manutenção e operação
 
-### Route optimization
-- Advanced algorithms from Google OR-Tools
-- Multiple vehicles
-- Capacity constraints (CVRP)
-- Minimize total distance or the longest single route
-- Multiple search strategies
+### Visualizações Interativas
+- **Mapas**: Visualização de rotas em mapa interativo
+- **Gráficos**: Análise de distâncias, custos e cargas
+- **Métricas**: Dashboard com KPIs principais
+- **Comparações**: Antes vs depois da otimização
 
-### Cost calculation
-- **Fuel**: based on current Brazilian prices
-- **Driver**: cost per working hour
-- **Depreciation**: vehicle wear
-- **Tolls**: estimated from distance
-- **Operational**: maintenance and operating costs
+### Análise Ambiental
+- Cálculo de emissões de CO2
+- Impacto ambiental da operação
+- Economia de emissões com otimização
 
-### Interactive visualizations
-- **Maps**: routes drawn on an interactive map
-- **Charts**: distance, cost and load analysis
-- **Metrics**: dashboard with the main KPIs
-- **Comparisons**: before vs. after optimization
+### Exportação de Dados
+- Exportar rotas em CSV
+- Exportar relatórios em Excel
+- Salvar mapas em HTML
 
-### Environmental analysis
-- CO2 emission calculation
-- Environmental impact of the operation
-- Emissions saved through optimization
-
-### Data export
-- Export routes to CSV
-- Export reports to Excel
-- Save maps as HTML
-
-## 🛠️ Tech stack
+## 🛠️ Tecnologias Utilizadas
 
 ### Backend
-- **Python 3.11**: main language
-- **OR-Tools**: Google's optimization library
-- **NumPy**: numerical computing
-- **Pandas**: data manipulation
+- **Python 3.11**: Linguagem principal
+- **OR-Tools**: Biblioteca de otimização do Google
+- **NumPy**: Computação numérica
+- **Pandas**: Manipulação de dados
 
 ### Frontend
-- **Streamlit**: web interface framework
-- **Folium**: interactive maps
-- **Plotly**: interactive charts
+- **Streamlit**: Framework para interface web
+- **Folium**: Mapas interativos
+- **Plotly**: Gráficos interativos
 
-### Algorithms
-- **VRP (Vehicle Routing Problem)**: basic routing
-- **CVRP (Capacitated VRP)**: with capacity constraints
-- **Heuristics**: PATH_CHEAPEST_ARC, SAVINGS, SWEEP
-- **Metaheuristics**: Guided Local Search, Simulated Annealing
-- **Nearest Neighbor**: a simple baseline, kept so OR-Tools can be measured
-  against something
+### Algoritmos
+- **VRP (Vehicle Routing Problem)**: Roteamento básico
+- **CVRP (Capacitated VRP)**: Com restrições de capacidade
+- **Heurísticas**: PATH_CHEAPEST_ARC, SAVINGS, SWEEP
+- **Metaheurísticas**: Guided Local Search, Simulated Annealing
 
-## 📦 Installation
+## 📦 Instalação
 
-### Prerequisites
-- Python 3.11 or newer
-- pip
+### Pré-requisitos
+- Python 3.11 ou superior
+- pip (gerenciador de pacotes Python)
 
-### Step by step
+### Passo a Passo
 
-1. **Clone the repository**
+1. **Clone o repositório**
 ```bash
 git clone https://github.com/lucianoon/sistema-otimizacao-logistica.git
 cd sistema-otimizacao-logistica
 ```
 
-2. **Create a virtual environment (recommended)**
+2. **Crie um ambiente virtual (recomendado)**
 ```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# or
+# ou
 venv\Scripts\activate  # Windows
 ```
 
-3. **Install the dependencies**
+3. **Instale as dependências**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Run the system**
+4. **Execute o sistema**
 ```bash
 streamlit run app.py
 ```
 
-5. **Open it in the browser**
+5. **Acesse no navegador**
 ```
 http://localhost:8501
 ```
 
-## 🚀 How to use
+## 🚀 Como Usar
 
-### 1. Data input
+### 1. Entrada de Dados
 
-#### Option A: sample data
-- Select "Dados de Exemplo" (sample data) in the sidebar
-- Choose the base city (São Paulo, Rio de Janeiro, etc.)
-- Adjust the number of customers and the distribution radius
-- Check "Incluir Demandas" (include demands) to use capacity constraints
+#### Opção A: Dados de Exemplo
+- Selecione "Dados de Exemplo" na barra lateral
+- Escolha a cidade base (São Paulo, Rio de Janeiro, etc.)
+- Ajuste o número de clientes e raio de distribuição
+- Marque "Incluir Demandas" para usar restrições de capacidade
 
-#### Option B: CSV upload
-- Prepare a CSV file with these columns:
-  - `latitude`: location latitude
-  - `longitude`: location longitude
-  - `nome`: location name/identifier
-  - `demanda` (optional): customer demand
-
-Example CSV:
+#### Opção B: Upload de CSV
+- Prepare um arquivo CSV com as colunas:
+  - `latitude`: Latitude do local
+  - `longitude`: Longitude do local
+  - `nome`: Nome/identificação do local
+  - `demanda` (opcional): Demanda do cliente
+  
+Exemplo de CSV:
 ```csv
 nome,latitude,longitude,demanda
 Depósito,-23.5505,-46.6333,0
@@ -171,267 +162,262 @@ Cliente 2,-23.5489,-46.6388,20
 Cliente 3,-23.5712,-46.6456,10
 ```
 
-- Select "Upload CSV" in the sidebar
-- Upload the file
-- Map the columns correctly
+- Selecione "Upload CSV" na barra lateral
+- Faça upload do arquivo
+- Mapeie as colunas corretamente
 
-> The interface labels and the sample CSV headers are in Portuguese, as shown
-> above. The column names (`nome`, `latitude`, `longitude`, `demanda`) are what
-> the parser expects.
+### 2. Configuração da Frota
 
-### 2. Fleet configuration
+- **Número de Veículos**: Quantos veículos estão disponíveis
+- **Capacidade por Veículo**: Capacidade de carga (se aplicável)
+- **Distância Máxima**: Limite de km por veículo
 
-- **Number of vehicles**: how many vehicles are available
-- **Capacity per vehicle**: load capacity (where applicable)
-- **Maximum distance**: km limit per vehicle
+### 3. Configuração de Custos
 
-### 3. Cost configuration
+Ajuste os valores conforme sua realidade:
+- **Preço Combustível**: R$ por litro (padrão: R$ 6,50)
+- **Consumo**: km por litro (padrão: 8 km/L)
+- **Custo Motorista**: R$ por hora (padrão: R$ 25/h)
+- **Incluir Pedágios**: Marque para considerar custos de pedágio
 
-Adjust the values to match your reality:
-- **Fuel price**: R$ per litre (default: R$ 6.50)
-- **Consumption**: km per litre (default: 8 km/L)
-- **Driver cost**: R$ per hour (default: R$ 25/h)
-- **Include tolls**: check to account for toll costs
+### 4. Otimizar
 
-### 4. Optimize
+- Clique no botão **"🚀 Otimizar Rotas"**
+- Aguarde o processamento (geralmente 5-30 segundos)
+- Visualize os resultados nas abas
 
-- Click **"🚀 Otimizar Rotas"** (optimize routes)
-- Wait for processing (usually 5–30 seconds)
-- Review the results in the tabs
+### 5. Analisar Resultados
 
-### 5. Analyze the results
+#### Aba Mapa
+- Visualize as rotas otimizadas no mapa
+- Cada veículo tem uma cor diferente
+- Clique nos marcadores para ver detalhes
+- Expanda os detalhes de cada rota
 
-#### Map tab
-- See the optimized routes on the map
-- Each vehicle gets its own color
-- Click the markers for details
-- Expand each route for a breakdown
+#### Aba Métricas
+- Veja métricas principais: distância total, maior rota, veículos usados
+- Analise gráficos de distribuição de distâncias
+- Verifique utilização de capacidade (se aplicável)
 
-#### Metrics tab
-- Main metrics: total distance, longest route, vehicles used
-- Distance distribution charts
-- Capacity utilization (where applicable)
+#### Aba Custos
+- Veja breakdown completo de custos
+- Analise distribuição por categoria
+- Verifique impacto ambiental (CO2)
+- Compare custo total vs custo por km
 
-#### Costs tab
-- Full cost breakdown
-- Distribution by category
-- Environmental impact (CO2)
-- Total cost vs. cost per km
+#### Aba Exportar
+- Visualize tabela completa das rotas
+- Baixe em formato CSV ou Excel
+- Use os dados em outros sistemas
 
-#### Export tab
-- Full route table
-- Download as CSV or Excel
-- Feed the data into other systems
-
-## 📁 Project structure
+## 📁 Estrutura do Projeto
 
 ```
 sistema-otimizacao-logistica/
-├── app.py                          # Main Streamlit application
-├── compare_algorithms.py           # OR-Tools vs. Nearest Neighbor benchmark
-├── requirements.txt                # Project dependencies
-├── packages.txt                    # System packages (Streamlit Cloud deploy)
-├── pytest.ini                      # pytest configuration
+├── app.py                          # Aplicação principal Streamlit
+├── compare_algorithms.py           # Benchmark OR-Tools vs Nearest Neighbor
+├── requirements.txt                # Dependências do projeto
+├── packages.txt                    # Pacotes de sistema (deploy Streamlit Cloud)
+├── pytest.ini                      # Configuração do pytest
 │
-├── modules/                        # System modules
-│   ├── optimizer.py                # VRP optimization logic (OR-Tools)
-│   ├── nearest_neighbor.py         # Nearest Neighbor baseline
-│   ├── cost_calculator.py          # Cost calculation
-│   ├── data_handler.py             # Data handling
-│   └── visualizer.py               # Visualizations and maps
+├── modules/                        # Módulos do sistema
+│   ├── optimizer.py                # Lógica de otimização VRP (OR-Tools)
+│   ├── nearest_neighbor.py         # Baseline Nearest Neighbor
+│   ├── cost_calculator.py          # Cálculo de custos
+│   ├── data_handler.py             # Manipulação de dados
+│   └── visualizer.py               # Visualizações e mapas
 │
 ├── data/
-│   └── exemplo_clientes.csv        # Sample customer data
+│   └── exemplo_clientes.csv        # Dados de exemplo
 │
-├── tests/                          # pytest suite
+├── tests/                          # Suíte pytest
 │   ├── test_optimizer.py
 │   ├── test_nearest_neighbor.py
 │   ├── test_cost_calculator.py
 │   ├── test_data_handler.py
 │   └── test_integration.py
 │
-├── QUICKSTART.md                   # Quick start guide
-├── EXEMPLO_USO.md                  # Usage walkthrough
-├── ENTRADA_MANUAL.md               # Manual data entry guide
-├── GUIA_ADICIONAR_ALGORITMOS.md    # Guide to adding new algorithms
-└── DEPLOY.md                       # Deployment notes
+├── QUICKSTART.md                   # Guia rápido
+├── EXEMPLO_USO.md                  # Passo a passo de uso
+├── ENTRADA_MANUAL.md               # Guia de entrada manual de dados
+├── GUIA_ADICIONAR_ALGORITMOS.md    # Guia para adicionar algoritmos
+└── DEPLOY.md                       # Notas de deploy
 ```
 
-The five guides above are in Portuguese.
+## 🧪 Testes
 
-## 🧪 Tests
+O projeto possui uma suíte de testes automatizados com **pytest** em `tests/`, cobrindo o cálculo de custos, a manipulação de dados, a heurística Nearest Neighbor e o otimizador OR-Tools. Os testes rodam automaticamente no GitHub Actions a cada push e pull request.
 
-The project has an automated **pytest** suite in `tests/` covering cost
-calculation, data handling, the Nearest Neighbor heuristic, the OR-Tools
-optimizer and an end-to-end integration path. The tests run automatically on
-GitHub Actions on every push and pull request.
-
-To run them locally:
+Para rodar localmente:
 
 ```bash
 pip install -r requirements.txt pytest
 pytest
 ```
 
-## 💡 Worked examples
+## 💡 Exemplos
 
-> **These are illustrative scenarios, not measured benchmark results.** The
-> numbers below show the shape of the output the system produces for a given
-> configuration — they were not recorded from a reproducible run and should not
-> be cited as performance figures. For real measurements on your own instance,
-> run `python compare_algorithms.py`, which benchmarks OR-Tools against the
-> Nearest Neighbor baseline and prints distance, longest route, vehicles used
-> and solve time for each.
+> **São cenários ilustrativos, não resultados medidos.** Os números abaixo
+> mostram o formato da saída que o sistema produz para uma dada configuração —
+> não foram registrados a partir de uma execução reproduzível e não devem ser
+> citados como métricas de desempenho. Para medições reais na sua instância,
+> rode `python compare_algorithms.py`, que compara OR-Tools com o baseline
+> Nearest Neighbor e imprime distância, maior rota, veículos usados e tempo de
+> solução para cada um.
 
-### Example 1: urban distribution in São Paulo
+### Exemplo 1: Distribuição Urbana em São Paulo
 
-**Scenario**: an e-commerce company needs to deliver 20 orders in São Paulo with
-4 vehicles.
+**Cenário**: Empresa de e-commerce precisa entregar 20 pedidos em São Paulo com 4 veículos.
 
-**Configuration**:
-- City: São Paulo
-- Customers: 20
-- Vehicles: 4
-- Capacity: 100 units/vehicle
-- Radius: 30 km
+**Configuração**:
+- Cidade: São Paulo
+- Clientes: 20
+- Veículos: 4
+- Capacidade: 100 unidades/veículo
+- Raio: 30 km
 
-**Output shape**: total distance, distance saved against the unoptimized route,
-total cost in R$, total time, and CO2 saved.
+**Resultado**:
+- Distância total: 145 km (vs 220 km sem otimização)
+- Economia: 34% em distância
+- Custo total: R$ 487,50
+- Tempo total: 4h 15min
+- CO2 economizado: 28 kg
 
-### Example 2: agricultural logistics
+### Exemplo 2: Logística Agrícola
 
-**Scenario**: distributing inputs to farms in the countryside.
+**Cenário**: Distribuição de insumos para fazendas no interior.
 
-**Configuration**:
-- City: Brasília
-- Farms: 15
-- Vehicles: 3
-- Capacity: 200 units/vehicle
-- Radius: 80 km
+**Configuração**:
+- Cidade: Brasília
+- Fazendas: 15
+- Veículos: 3
+- Capacidade: 200 unidades/veículo
+- Raio: 80 km
 
-**Output shape**: total distance, total cost in R$, total time, and vehicles
-used out of vehicles available.
+**Resultado**:
+- Distância total: 385 km
+- Custo total: R$ 1.245,00
+- Tempo total: 9h 30min
+- Veículos utilizados: 3/3
 
-## 🎯 Use cases
+## 🎯 Casos de Uso
 
-### 1. E-commerce and retail
-- Last-mile delivery
-- Store replenishment
-- Product pickup
+### 1. E-commerce e Varejo
+- Entregas last-mile
+- Distribuição para lojas
+- Coleta de produtos
 
-### 2. Agricultural logistics
-- Input distribution
-- Harvest collection
-- Equipment transport
+### 2. Logística Agrícola
+- Distribuição de insumos
+- Coleta de produção
+- Transporte de equipamentos
 
-### 3. Industry
-- Distribution to distributors
-- Raw material collection
-- Reverse logistics
+### 3. Indústria
+- Distribuição para distribuidores
+- Coleta de matéria-prima
+- Logística reversa
 
-### 4. Services
-- Technician routes
-- Waste collection
-- Staff transport
+### 4. Serviços
+- Rotas de técnicos
+- Coleta de resíduos
+- Transporte de pessoal
 
-### 5. Public sector
-- School bus routes
-- Refuse collection
-- Mail delivery
+### 5. Setor Público
+- Rotas de ônibus escolares
+- Coleta de lixo
+- Entregas de correspondência
 
-## 🔧 Advanced configuration
+## 🔧 Configurações Avançadas
 
-### Customizing the algorithms
+### Personalizar Algoritmos
 
-Edit `modules/optimizer.py` to adjust:
-- First-solution strategies
-- Local-search metaheuristics
-- Optimization time limit
-- Search parameters
+Edite `modules/optimizer.py` para ajustar:
+- Estratégias de primeira solução
+- Metaheurísticas de busca local
+- Tempo limite de otimização
+- Parâmetros de busca
 
-See [`GUIA_ADICIONAR_ALGORITMOS.md`](GUIA_ADICIONAR_ALGORITMOS.md) (in
-Portuguese) for the interface a new algorithm must implement.
+### Adicionar Restrições
 
-### Adding constraints
+O sistema suporta:
+- **Capacidade**: Já implementado
+- **Janelas de Tempo**: Estrutura preparada
+- **Múltiplos Depósitos**: Estrutura preparada
+- **Pickup & Delivery**: Estrutura preparada
 
-- **Capacity**: implemented
-- **Time windows**: not implemented — structure prepared
-- **Multiple depots**: not implemented — structure prepared
-- **Pickup & delivery**: not implemented — structure prepared
+### Integrar APIs de Roteamento
 
-### Integrating routing APIs
-
-For real road distances, integrate:
+Para distâncias reais de estrada, integre:
 - Google Maps Distance Matrix API
 - OpenRouteService API
 - OSRM (Open Source Routing Machine)
 
-Distances are currently computed geometrically, not over the road network.
+## 📊 Métricas e KPIs
 
-## 📊 Metrics and KPIs
+O sistema calcula automaticamente:
 
-The system computes automatically:
+### Operacionais
+- Distância total (km)
+- Distância média por rota
+- Maior rota
+- Número de veículos utilizados
+- Taxa de utilização da frota
 
-### Operational
-- Total distance (km)
-- Average distance per route
-- Longest route
-- Number of vehicles used
-- Fleet utilization rate
+### Financeiros
+- Custo total (R$)
+- Custo por km
+- Custo por entrega
+- Breakdown por categoria
 
-### Financial
-- Total cost (R$)
-- Cost per km
-- Cost per delivery
-- Breakdown by category
+### Ambientais
+- Emissões de CO2 (kg)
+- Equivalente em árvores
+- Economia vs cenário não otimizado
 
-### Environmental
-- CO2 emissions (kg)
-- Tree equivalent
-- Savings vs. the unoptimized scenario
+## 🤝 Contribuindo
 
-## 🤝 Contributing
+Contribuições são bem-vindas! Para contribuir:
 
-Contributions are welcome. To contribute:
-
-1. Fork the project
-2. Create a branch for your feature (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
 ## 📝 Roadmap
 
-- [ ] Time windows (VRPTW)
-- [ ] Multiple depots (MDVRP)
-- [ ] Integration with real routing APIs
-- [ ] Pickup and delivery
-- [ ] Real-time optimization
-- [ ] Management dashboard
-- [ ] REST API
-- [ ] Mobile app
+- [ ] Adicionar suporte a janelas de tempo (VRPTW)
+- [ ] Implementar múltiplos depósitos (MDVRP)
+- [ ] Integração com APIs de roteamento real
+- [ ] Suporte a pickup and delivery
+- [ ] Otimização em tempo real
+- [ ] Dashboard gerencial
+- [ ] API REST
+- [ ] Aplicativo mobile
 
-## 🐛 Known issues
+## 🐛 Problemas Conhecidos
 
-- Large instances (>50 locations) take longer to optimize
-- Maps can get slow with many routes
-- Exporting large maps can consume a lot of memory
-- Distances are geometric, not road-network distances
+- Grandes instâncias (>50 localizações) podem demorar mais para otimizar
+- Mapas podem ficar lentos com muitas rotas
+- Exportação de mapas grandes pode consumir memória
 
-## 📄 License
+## 📄 Licença
 
-This project is under the MIT license. See the `LICENSE` file for details.
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
-## 🙏 Acknowledgements
+## 🙏 Agradecimentos
 
-- Google OR-Tools for the excellent optimization library
-- The Streamlit community for the framework
-- OpenStreetMap for the map data
+- Google OR-Tools pela excelente biblioteca de otimização
+- Comunidade Streamlit pelo framework incrível
+- OpenStreetMap pelos dados de mapas
 
-## 📞 Contact
+## 📞 Contato
 
-For questions, suggestions or support, open an issue on GitHub.
+Para dúvidas, sugestões ou suporte:
+- Abra uma issue no GitHub
+- Entre em contato via email
 
 ---
 
-**Built to improve logistics in Brazil** 🇧🇷
+**Desenvolvido com ❤️ para melhorar a logística no Brasil** 🇧🇷
+
