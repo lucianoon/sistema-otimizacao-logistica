@@ -43,13 +43,12 @@ In the Brazilian context, companies face challenges such as:
 - **High fuel costs**: volatile and expensive
 - **Tolls**: a significant cost on interstate routes
 
-The system is built to help:
+The system lets users:
 
-✅ Reduce distance travelled
-✅ Cut operating costs
-✅ Improve fleet utilization
-✅ Reduce CO2 emissions
-✅ Improve delivery times
+- compare routes and search for a lower-distance solution for the given scenario;
+- estimate operating costs from explicit parameters;
+- improve fleet utilization while respecting capacity and maximum distance;
+- analyze distance, load, cost and emissions.
 
 How much it helps depends entirely on the instance. Run
 [`compare_algorithms.py`](compare_algorithms.py) to measure the gain on your own
