@@ -10,10 +10,11 @@ updates:
       # diretamente (RoutingModel, estratégias de primeira solução).
       - dependency-name: "ortools"
         update-types: ["version-update:semver-major"]
-      # numpy 1→2 rompeu compatibilidade em boa parte do ecossistema científico;
+      # numpy NÃO entra aqui de propósito. Prender em 1.x parece conservador,
+      # mas trava o conjunto: ortools 9.15 exige numpy>=2.0.2, então o grupo
+      # inteiro fica insolúvel (ResolutionImpossible na CI). O código só usa
+      # np.zeros/sin/cos/pi/random, estáveis no 2.x, e nenhuma API removida.
       # pandas 2→3 e streamlit majors mudam API pública.
-      - dependency-name: "numpy"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "pandas"
         update-types: ["version-update:semver-major"]
       - dependency-name: "streamlit"
