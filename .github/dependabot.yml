@@ -1,0 +1,33 @@
+version: 2
+
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # ortools muda a API do solver entre majors, e o optimizer depende dela
+      # diretamente (RoutingModel, estratégias de primeira solução).
+      - dependency-name: "ortools"
+        update-types: ["version-update:semver-major"]
+      # numpy 1→2 rompeu compatibilidade em boa parte do ecossistema científico;
+      # pandas 2→3 e streamlit majors mudam API pública.
+      - dependency-name: "numpy"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "pandas"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "streamlit"
+        update-types: ["version-update:semver-major"]
+    # Todas as versões estão fixas com ==, então o conjunto anda junto e a CI
+    # valida o lote inteiro. Um PR agrupado é o formato certo aqui.
+    groups:
+      python-dependencies:
+        patterns: ["*"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
