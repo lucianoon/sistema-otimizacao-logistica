@@ -251,7 +251,9 @@ O projeto possui uma suíte de testes automatizados com **pytest** em `tests/`, 
 Para rodar localmente:
 
 ```bash
-pip install -r requirements.txt pytest
+pip install -r requirements.txt pytest ruff mypy
+ruff check .    # lint
+mypy            # checagem de tipos
 pytest
 ```
 

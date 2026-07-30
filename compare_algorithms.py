@@ -4,10 +4,13 @@ Compara OR-Tools vs Nearest Neighbor
 """
 
 import time
+
 import pandas as pd
-from modules.optimizer import VRPOptimizer
-from modules.nearest_neighbor import NearestNeighborOptimizer
+
 from modules.data_handler import DataHandler
+from modules.nearest_neighbor import NearestNeighborOptimizer
+from modules.optimizer import VRPOptimizer
+
 
 def compare_algorithms():
     """Compara diferentes algoritmos de otimização."""
@@ -26,13 +29,12 @@ def compare_algorithms():
     )
     
     locations = data['locations']
-    names = data['names']
     
     print(f"✓ {len(locations)} localizações criadas")
     
     # Criar matriz de distâncias
     distance_matrix = DataHandler.create_distance_matrix(locations, method='haversine')
-    print(f"✓ Matriz de distâncias criada")
+    print("✓ Matriz de distâncias criada")
     
     num_vehicles = 3
     
@@ -60,7 +62,7 @@ def compare_algorithms():
         metrics_nn = optimizer_nn.get_metrics()
         results['Nearest Neighbor'] = metrics_nn
         
-        print(f"✅ Solução encontrada!")
+        print("✅ Solução encontrada!")
         print(f"   Distância Total: {metrics_nn['total_distance']/1000:.2f} km")
         print(f"   Maior Rota: {metrics_nn['max_route_distance']/1000:.2f} km")
         print(f"   Veículos Usados: {metrics_nn['num_vehicles_used']}")
@@ -94,7 +96,7 @@ def compare_algorithms():
         metrics_or1 = optimizer_or1.get_metrics()
         results['OR-Tools (PATH_CHEAPEST_ARC)'] = metrics_or1
         
-        print(f"✅ Solução encontrada!")
+        print("✅ Solução encontrada!")
         print(f"   Distância Total: {metrics_or1['total_distance']/1000:.2f} km")
         print(f"   Maior Rota: {metrics_or1['max_route_distance']/1000:.2f} km")
         print(f"   Veículos Usados: {metrics_or1['num_vehicles_used']}")
@@ -128,7 +130,7 @@ def compare_algorithms():
         metrics_or2 = optimizer_or2.get_metrics()
         results['OR-Tools (SAVINGS)'] = metrics_or2
         
-        print(f"✅ Solução encontrada!")
+        print("✅ Solução encontrada!")
         print(f"   Distância Total: {metrics_or2['total_distance']/1000:.2f} km")
         print(f"   Maior Rota: {metrics_or2['max_route_distance']/1000:.2f} km")
         print(f"   Veículos Usados: {metrics_or2['num_vehicles_used']}")
@@ -178,7 +180,7 @@ def compare_algorithms():
             savings_km = (worst_distance - best_distance) / 1000
             savings_percent = ((worst_distance - best_distance) / worst_distance) * 100
             
-            print(f"\n💰 Economia Potencial:")
+            print("\n💰 Economia Potencial:")
             print(f"   {savings_km:.2f} km ({savings_percent:.1f}%)")
         
         print("="*70 + "\n")
