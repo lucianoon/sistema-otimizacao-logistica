@@ -3,13 +3,11 @@ Módulo de Visualização
 Criação de mapas e gráficos para análise de rotas
 """
 
+
 import folium
-from folium import plugins
-import plotly.graph_objects as go
-import plotly.express as px
-from typing import List, Tuple, Dict, Optional
 import pandas as pd
-import numpy as np
+import plotly.graph_objects as go
+from folium import plugins
 
 
 class RouteVisualizer:
@@ -26,11 +24,11 @@ class RouteVisualizer:
     
     @staticmethod
     def create_route_map(
-        locations: List[Tuple[float, float]],
-        routes: List[List[int]],
-        names: List[str],
+        locations: list[tuple[float, float]],
+        routes: list[list[int]],
+        names: list[str],
         depot_index: int = 0,
-        route_distances: Optional[List[float]] = None,
+        route_distances: list[float] | None = None,
         zoom_start: int = 11
     ) -> folium.Map:
         """
@@ -144,8 +142,8 @@ class RouteVisualizer:
     
     @staticmethod
     def create_distance_chart(
-        route_distances: List[float],
-        route_labels: Optional[List[str]] = None
+        route_distances: list[float],
+        route_labels: list[str] | None = None
     ) -> go.Figure:
         """
         Cria gráfico de barras com distâncias das rotas.
@@ -183,7 +181,7 @@ class RouteVisualizer:
         return fig
     
     @staticmethod
-    def create_cost_breakdown_chart(costs: Dict) -> go.Figure:
+    def create_cost_breakdown_chart(costs: dict) -> go.Figure:
         """
         Cria gráfico de pizza com breakdown de custos.
         
@@ -221,8 +219,8 @@ class RouteVisualizer:
     
     @staticmethod
     def create_route_comparison_chart(
-        scenario1_distances: List[float],
-        scenario2_distances: List[float],
+        scenario1_distances: list[float],
+        scenario2_distances: list[float],
         scenario1_name: str = "Sem Otimização",
         scenario2_name: str = "Com Otimização"
     ) -> go.Figure:
@@ -271,7 +269,7 @@ class RouteVisualizer:
         return fig
     
     @staticmethod
-    def create_metrics_table(metrics: Dict) -> pd.DataFrame:
+    def create_metrics_table(metrics: dict) -> pd.DataFrame:
         """
         Cria tabela com métricas da solução.
         
@@ -300,8 +298,8 @@ class RouteVisualizer:
     
     @staticmethod
     def create_load_chart(
-        route_loads: List[int],
-        vehicle_capacities: List[int]
+        route_loads: list[int],
+        vehicle_capacities: list[int]
     ) -> go.Figure:
         """
         Cria gráfico de carga por veículo.
@@ -333,8 +331,8 @@ class RouteVisualizer:
             x=vehicle_labels,
             y=vehicle_capacities[:len(route_loads)],
             mode='lines+markers',
-            line=dict(color='#FF6B6B', width=2, dash='dash'),
-            marker=dict(size=8)
+            line={'color': '#FF6B6B', 'width': 2, 'dash': 'dash'},
+            marker={'size': 8}
         ))
         
         fig.update_layout(

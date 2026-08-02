@@ -268,7 +268,9 @@ GitHub Actions on every push and pull request.
 To run them locally:
 
 ```bash
-pip install -r requirements.txt pytest
+pip install -r requirements.txt pytest ruff mypy
+ruff check .    # lint
+mypy            # type check
 pytest
 ```
 

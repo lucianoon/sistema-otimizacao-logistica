@@ -3,8 +3,8 @@ Algoritmo Nearest Neighbor (Vizinho Mais Próximo)
 Heurística simples e rápida para VRP
 """
 
+
 import numpy as np
-from typing import List, Dict
 
 
 class NearestNeighborOptimizer:
@@ -20,7 +20,7 @@ class NearestNeighborOptimizer:
         distance_matrix: np.ndarray,
         num_vehicles: int,
         depot_index: int = 0,
-        max_customers_per_route: int = None
+        max_customers_per_route: int | None = None
     ):
         """
         Inicializa o otimizador Nearest Neighbor.
@@ -35,15 +35,14 @@ class NearestNeighborOptimizer:
         self.num_vehicles = num_vehicles
         self.depot_index = depot_index
         self.num_locations = len(distance_matrix)
-        self.max_customers_per_route = max_customers_per_route
-        
-        if self.max_customers_per_route is None:
+        if max_customers_per_route is None:
             # Distribuir clientes igualmente entre veículos
             num_customers = self.num_locations - 1
-            self.max_customers_per_route = (num_customers // num_vehicles) + 2
+            max_customers_per_route = (num_customers // num_vehicles) + 2
+        self.max_customers_per_route: int = max_customers_per_route
         
-        self.solution = None
-        self.execution_time = 0
+        self.solution: list[list[int]] | None = None
+        self.execution_time: float = 0.0
     
     def solve(self, **kwargs) -> bool:
         """
@@ -62,7 +61,7 @@ class NearestNeighborOptimizer:
         routes = []
         
         # Construir rota para cada veículo
-        for vehicle_id in range(self.num_vehicles):
+        for _vehicle_id in range(self.num_vehicles):
             if not unvisited:
                 break
             
@@ -96,7 +95,7 @@ class NearestNeighborOptimizer:
         
         return True
     
-    def get_routes(self) -> List[List[int]]:
+    def get_routes(self) -> list[list[int]]:
         """
         Retorna as rotas da solução.
         
@@ -105,7 +104,7 @@ class NearestNeighborOptimizer:
         """
         return self.solution if self.solution else []
     
-    def get_route_distance(self, route: List[int]) -> float:
+    def get_route_distance(self, route: list[int]) -> float:
         """
         Calcula a distância de uma rota.
         
@@ -120,7 +119,7 @@ class NearestNeighborOptimizer:
             distance += self.distance_matrix[route[i]][route[i + 1]]
         return distance
     
-    def get_metrics(self) -> Dict:
+    def get_metrics(self) -> dict:
         """
         Calcula métricas da solução.
         
@@ -132,14 +131,14 @@ class NearestNeighborOptimizer:
         
         routes = self.solution
         route_distances = []
-        total_distance = 0
+        total_distance = 0.0
         
         for route in routes:
             distance = self.get_route_distance(route)
             route_distances.append(distance)
             total_distance += distance
         
-        max_route_distance = max(route_distances) if route_distances else 0
+        max_route_distance = max(route_distances) if route_distances else 0.0
         
         return {
             'objective_value': total_distance,
@@ -163,7 +162,7 @@ class NearestNeighborOptimizer:
         routes = metrics['routes']
         
         print(f"\n{'='*60}")
-        print(f"SOLUÇÃO - NEAREST NEIGHBOR")
+        print("SOLUÇÃO - NEAREST NEIGHBOR")
         print(f"{'='*60}")
         print(f"Distância Total: {metrics['total_distance']/1000:.2f} km")
         print(f"Maior Rota: {metrics['max_route_distance']/1000:.2f} km")

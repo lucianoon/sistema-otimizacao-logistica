@@ -3,8 +3,7 @@ Módulo de Cálculo de Custos Logísticos
 Adaptado para a realidade brasileira
 """
 
-from typing import Dict, List
-import numpy as np
+
 
 
 class CostCalculator:
@@ -133,7 +132,7 @@ class CostCalculator:
         """
         return distance_km * self.cost_per_km
     
-    def calculate_total_cost(self, distance_km: float) -> Dict[str, float]:
+    def calculate_total_cost(self, distance_km: float) -> dict[str, float]:
         """
         Calcula o custo total detalhado.
         
@@ -181,7 +180,7 @@ class CostCalculator:
         liters_consumed = distance_km / self.fuel_consumption_km_per_liter
         return liters_consumed * self.CO2_EMISSION_PER_LITER
     
-    def calculate_route_costs(self, route_distances_km: List[float]) -> Dict:
+    def calculate_route_costs(self, route_distances_km: list[float]) -> dict:
         """
         Calcula custos para múltiplas rotas.
         
@@ -215,17 +214,19 @@ class CostCalculator:
             'total_co2_kg': total_co2,
             'num_routes': len(route_distances_km),
             'route_costs': route_costs,
-            'average_cost_per_route': total_cost / len(route_distances_km) if route_distances_km else 0,
+            'average_cost_per_route': (
+                total_cost / len(route_distances_km) if route_distances_km else 0
+            ),
             'cost_per_km': total_cost / total_distance if total_distance > 0 else 0
         }
     
     def compare_scenarios(
         self, 
-        scenario1_distances: List[float],
-        scenario2_distances: List[float],
+        scenario1_distances: list[float],
+        scenario2_distances: list[float],
         scenario1_name: str = "Cenário 1",
         scenario2_name: str = "Cenário 2"
-    ) -> Dict:
+    ) -> dict:
         """
         Compara dois cenários de roteamento.
         
@@ -260,7 +261,7 @@ class CostCalculator:
             'savings': savings
         }
     
-    def print_cost_breakdown(self, costs: Dict):
+    def print_cost_breakdown(self, costs: dict):
         """
         Imprime breakdown de custos formatado.
         
@@ -268,7 +269,7 @@ class CostCalculator:
             costs: Dicionário de custos retornado por calculate_route_costs
         """
         print(f"\n{'='*60}")
-        print(f"ANÁLISE DE CUSTOS LOGÍSTICOS")
+        print("ANÁLISE DE CUSTOS LOGÍSTICOS")
         print(f"{'='*60}")
         print(f"Distância Total: {costs['total_distance_km']:.2f} km")
         print(f"Tempo Total: {costs['total_time_hours']:.2f} horas")

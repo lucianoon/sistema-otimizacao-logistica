@@ -3,10 +3,10 @@ Módulo de Manipulação de Dados
 Processamento de endereços, coordenadas e dados de entrada
 """
 
-import pandas as pd
+from math import asin, cos, radians, sin, sqrt
+
 import numpy as np
-from typing import List, Tuple, Dict, Optional
-from math import radians, cos, sin, asin, sqrt
+import pandas as pd
 
 
 class DataHandler:
@@ -59,7 +59,7 @@ class DataHandler:
     
     @staticmethod
     def create_distance_matrix(
-        locations: List[Tuple[float, float]],
+        locations: list[tuple[float, float]],
         method: str = 'haversine'
     ) -> np.ndarray:
         """
@@ -101,8 +101,8 @@ class DataHandler:
         lat_column: str = 'latitude',
         lon_column: str = 'longitude',
         name_column: str = 'nome',
-        demand_column: Optional[str] = None
-    ) -> Dict:
+        demand_column: str | None = None
+    ) -> dict:
         """
         Carrega localizações de um arquivo CSV.
         
@@ -124,7 +124,7 @@ class DataHandler:
             if col not in df.columns:
                 raise ValueError(f"Coluna '{col}' não encontrada no CSV")
         
-        locations = list(zip(df[lat_column], df[lon_column]))
+        locations = list(zip(df[lat_column], df[lon_column], strict=True))
         names = df[name_column].tolist()
         
         result = {
@@ -144,8 +144,8 @@ class DataHandler:
         lat_column: str = 'latitude',
         lon_column: str = 'longitude',
         name_column: str = 'nome',
-        demand_column: Optional[str] = None
-    ) -> Dict:
+        demand_column: str | None = None
+    ) -> dict:
         """
         Carrega localizações de um DataFrame pandas.
         
@@ -165,7 +165,7 @@ class DataHandler:
             if col not in df.columns:
                 raise ValueError(f"Coluna '{col}' não encontrada no DataFrame")
         
-        locations = list(zip(df[lat_column], df[lon_column]))
+        locations = list(zip(df[lat_column], df[lon_column], strict=True))
         names = df[name_column].tolist()
         
         result = {
@@ -182,10 +182,10 @@ class DataHandler:
     @staticmethod
     def create_sample_data(
         num_locations: int = 15,
-        depot_location: Tuple[float, float] = (-23.5505, -46.6333),  # São Paulo
+        depot_location: tuple[float, float] = (-23.5505, -46.6333),  # São Paulo
         radius_km: float = 50,
         include_demands: bool = False
-    ) -> Dict:
+    ) -> dict:
         """
         Cria dados de exemplo para testes.
         
@@ -232,7 +232,7 @@ class DataHandler:
         return result
     
     @staticmethod
-    def validate_locations(locations: List[Tuple[float, float]]) -> bool:
+    def validate_locations(locations: list[tuple[float, float]]) -> bool:
         """
         Valida se as coordenadas são válidas.
         
@@ -251,10 +251,10 @@ class DataHandler:
     
     @staticmethod
     def create_dataframe_from_routes(
-        routes: List[List[int]],
-        names: List[str],
-        locations: List[Tuple[float, float]],
-        route_distances: Optional[List[float]] = None
+        routes: list[list[int]],
+        names: list[str],
+        locations: list[tuple[float, float]],
+        route_distances: list[float] | None = None
     ) -> pd.DataFrame:
         """
         Cria um DataFrame com informações das rotas.
@@ -276,7 +276,11 @@ class DataHandler:
                     'veiculo': vehicle_id + 1,
                     'sequencia': seq,
                     'localizacao_id': location_idx,
-                    'nome': names[location_idx] if location_idx < len(names) else f'Local {location_idx}',
+                    'nome': (
+                        names[location_idx]
+                        if location_idx < len(names)
+                        else f'Local {location_idx}'
+                    ),
                     'latitude': locations[location_idx][0],
                     'longitude': locations[location_idx][1]
                 }
@@ -290,11 +294,11 @@ class DataHandler:
     
     @staticmethod
     def export_routes_to_csv(
-        routes: List[List[int]],
-        names: List[str],
-        locations: List[Tuple[float, float]],
+        routes: list[list[int]],
+        names: list[str],
+        locations: list[tuple[float, float]],
         filepath: str,
-        route_distances: Optional[List[float]] = None
+        route_distances: list[float] | None = None
     ):
         """
         Exporta rotas para um arquivo CSV.

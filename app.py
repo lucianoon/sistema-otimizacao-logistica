@@ -3,17 +3,15 @@ Sistema de Otimização Logística para o Brasil
 Interface Streamlit para otimização de rotas de veículos
 """
 
-import streamlit as st
 import pandas as pd
-import numpy as np
-from modules.optimizer import VRPOptimizer
+import streamlit as st
+from streamlit_folium import folium_static
+
 from modules.cost_calculator import CostCalculator
 from modules.data_handler import DataHandler
-from modules.visualizer import RouteVisualizer
 from modules.nearest_neighbor import NearestNeighborOptimizer
-import folium
-from streamlit_folium import folium_static
-import plotly.graph_objects as go
+from modules.optimizer import VRPOptimizer
+from modules.visualizer import RouteVisualizer
 
 # Configuração da página
 st.set_page_config(
@@ -77,7 +75,7 @@ def load_data():
             list(cities.keys())
         )
         
-        depot_location = cities[selected_city]
+        depot_location = cities[str(selected_city)]
         
         radius_km = st.sidebar.slider(
             "Raio de Distribuição (km):",
@@ -113,7 +111,11 @@ def load_data():
                 
                 lat_col = st.sidebar.selectbox("Coluna de Latitude:", df.columns, index=0)
                 lon_col = st.sidebar.selectbox("Coluna de Longitude:", df.columns, index=1)
-                name_col = st.sidebar.selectbox("Coluna de Nome:", df.columns, index=2 if len(df.columns) > 2 else 0)
+                name_col = st.sidebar.selectbox(
+                    "Coluna de Nome:",
+                    df.columns,
+                    index=2 if len(df.columns) > 2 else 0,
+                )
                 
                 demand_col = None
                 if st.sidebar.checkbox("Incluir Demandas"):
@@ -121,9 +123,9 @@ def load_data():
                 
                 data = DataHandler.load_locations_from_dataframe(
                     df,
-                    lat_column=lat_col,
-                    lon_column=lon_col,
-                    name_column=name_col,
+                    lat_column=str(lat_col),
+                    lon_column=str(lon_col),
+                    name_column=str(name_col),
                     demand_column=demand_col
                 )
                 
@@ -196,7 +198,10 @@ def load_data():
         
         # Mostrar clientes adicionados
         if st.session_state.manual_locations:
-            st.sidebar.markdown(f"**Clientes Adicionados: {len(st.session_state.manual_locations)}**")
+            st.sidebar.markdown(
+                f"**Clientes Adicionados: "
+                f"{len(st.session_state.manual_locations)}**"
+            )
             
             # Botão para limpar todos
             if st.sidebar.button("🗑️ Limpar Todos os Clientes"):
@@ -218,7 +223,10 @@ def load_data():
         if st.session_state.manual_locations:
             # Criar listas
             all_names = [depot_name] + [loc['nome'] for loc in st.session_state.manual_locations]
-            all_locations = [(depot_lat, depot_lon)] + [(loc['latitude'], loc['longitude']) for loc in st.session_state.manual_locations]
+            all_locations = [(depot_lat, depot_lon)] + [
+                (loc['latitude'], loc['longitude'])
+                for loc in st.session_state.manual_locations
+            ]
             
             # Verificar se há demandas
             has_demands = any(loc['demanda'] > 0 for loc in st.session_state.manual_locations)
@@ -271,7 +279,9 @@ if data is not None:
     )
     
     # Configurações de capacidade
-    use_capacity = demands is not None and st.sidebar.checkbox("Usar Restrições de Capacidade", value=True if demands else False)
+    use_capacity = demands is not None and st.sidebar.checkbox(
+        "Usar Restrições de Capacidade", value=bool(demands)
+    )
     
     vehicle_capacities = None
     if use_capacity and demands:
@@ -281,7 +291,7 @@ if data is not None:
             max_value=1000,
             value=100
         )
-        vehicle_capacities = [capacity_per_vehicle] * num_vehicles
+        vehicle_capacities = [int(capacity_per_vehicle)] * int(num_vehicles)
     
     max_distance_km = st.sidebar.number_input(
         "Distância Máxima por Veículo (km):",
@@ -299,7 +309,8 @@ if data is not None:
             "OR-Tools (Recomendado)",
             "Nearest Neighbor (Rápido)"
         ],
-        help="OR-Tools: Algoritmo avançado com melhores resultados\nNearest Neighbor: Heurística rápida e simples"
+        help="OR-Tools: Algoritmo avançado com melhores resultados\n"
+             "Nearest Neighbor: Heurística rápida e simples"
     )
     
     # Parâmetros específicos do OR-Tools
@@ -383,10 +394,11 @@ if data is not None:
                 )
                 
                 # Criar otimizador baseado no algoritmo selecionado
+                optimizer: VRPOptimizer | NearestNeighborOptimizer
                 if algorithm == "OR-Tools (Recomendado)":
                     optimizer = VRPOptimizer(
                         distance_matrix=distance_matrix,
-                        num_vehicles=num_vehicles,
+                        num_vehicles=int(num_vehicles),
                         depot_index=0,
                         vehicle_capacities=vehicle_capacities if use_capacity else None,
                         demands=demands if use_capacity else None,
@@ -396,14 +408,14 @@ if data is not None:
                     # Resolver com parâmetros configurados
                     success = optimizer.solve(
                         time_limit_seconds=time_limit,
-                        strategy=strategy,
+                        strategy=str(strategy),
                         local_search=None if local_search == 'Nenhuma' else local_search
                     )
                     
                 else:  # Nearest Neighbor
                     optimizer = NearestNeighborOptimizer(
                         distance_matrix=distance_matrix,
-                        num_vehicles=num_vehicles,
+                        num_vehicles=int(num_vehicles),
                         depot_index=0
                     )
                     
@@ -455,7 +467,10 @@ if st.session_state.solution_calculated and st.session_state.optimizer is not No
         st.markdown("### 🚛 Detalhes das Rotas")
         
         for vehicle_id, route in enumerate(routes):
-            with st.expander(f"Veículo {vehicle_id + 1} - {route_distances[vehicle_id]/1000:.2f} km"):
+            expander_label = (
+                f"Veículo {vehicle_id + 1} - {route_distances[vehicle_id]/1000:.2f} km"
+            )
+            with st.expander(expander_label):
                 route_info = " → ".join([names[idx] for idx in route])
                 st.write(f"**Rota:** {route_info}")
                 st.write(f"**Distância:** {route_distances[vehicle_id]/1000:.2f} km")
@@ -497,7 +512,10 @@ if st.session_state.solution_calculated and st.session_state.optimizer is not No
         algorithm_used = metrics.get('algorithm', 'OR-Tools')
         execution_time = metrics.get('execution_time', 0)
         
-        st.info(f"🧮 **Algoritmo Utilizado:** {algorithm_used} | ⏱️ **Tempo de Execução:** {execution_time:.2f}s")
+        st.info(
+            f"🧮 **Algoritmo Utilizado:** {algorithm_used} | "
+            f"⏱️ **Tempo de Execução:** {execution_time:.2f}s"
+        )
         
         # Gráficos
         st.markdown("### 📈 Análise Visual")
@@ -573,7 +591,10 @@ if st.session_state.solution_calculated and st.session_state.optimizer is not No
             # Tabela de custos
             st.markdown("#### Resumo")
             cost_data = {
-                'Item': ['Combustível', 'Motorista', 'Depreciação', 'Pedágios', 'Operacional', 'TOTAL'],
+                'Item': [
+                    'Combustível', 'Motorista', 'Depreciação',
+                    'Pedágios', 'Operacional', 'TOTAL',
+                ],
                 'Valor (R$)': [
                     f"{costs['total_fuel_cost']:.2f}",
                     f"{costs['total_driver_cost']:.2f}",
@@ -635,18 +656,23 @@ if st.session_state.solution_calculated and st.session_state.optimizer is not No
 
 else:
     # Mensagem inicial
-    st.info("👈 Configure os parâmetros na barra lateral e clique em 'Otimizar Rotas' para começar.")
+    st.info(
+        "👈 Configure os parâmetros na barra lateral e clique em "
+        "'Otimizar Rotas' para começar."
+    )
     
     # Informações sobre o sistema
     st.markdown("""
     ## 📖 Sobre o Sistema
     
-    Este sistema utiliza algoritmos avançados de otimização para resolver problemas de roteamento de veículos (VRP - Vehicle Routing Problem).
+    Este sistema utiliza algoritmos avançados de otimização para resolver
+    problemas de roteamento de veículos (VRP - Vehicle Routing Problem).
     
     ### ✨ Funcionalidades:
     
     - **Otimização de Rotas**: Encontra as rotas mais eficientes para sua frota
-    - **Cálculo de Custos**: Estima custos operacionais detalhados (combustível, motorista, pedágios, etc.)
+    - **Cálculo de Custos**: Estima custos operacionais detalhados
+      (combustível, motorista, pedágios, etc.)
     - **Restrições de Capacidade**: Considera a capacidade de carga dos veículos
     - **Visualização Interativa**: Mapas e gráficos para análise das rotas
     - **Análise de Impacto Ambiental**: Calcula emissões de CO2
@@ -674,7 +700,8 @@ st.markdown("---")
 st.markdown(
     """
     <div style='text-align: center; color: gray;'>
-        Sistema de Otimização Logística v1.0 | Desenvolvido com ❤️ usando Python, OR-Tools e Streamlit
+        Sistema de Otimização Logística v1.0 |
+        Desenvolvido com ❤️ usando Python, OR-Tools e Streamlit
     </div>
     """,
     unsafe_allow_html=True

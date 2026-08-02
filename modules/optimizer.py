@@ -3,10 +3,10 @@ Módulo de Otimização de Rotas usando OR-Tools
 Sistema de Otimização Logística para o Brasil
 """
 
-from ortools.constraint_solver import routing_enums_pb2
-from ortools.constraint_solver import pywrapcp
+from typing import Any
+
 import numpy as np
-from typing import Dict, List, Tuple, Optional
+from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 
 
 class VRPOptimizer:
@@ -20,9 +20,9 @@ class VRPOptimizer:
         distance_matrix: np.ndarray,
         num_vehicles: int,
         depot_index: int = 0,
-        vehicle_capacities: Optional[List[int]] = None,
-        demands: Optional[List[int]] = None,
-        time_windows: Optional[List[Tuple[int, int]]] = None,
+        vehicle_capacities: list[int] | None = None,
+        demands: list[int] | None = None,
+        time_windows: list[tuple[int, int]] | None = None,
         max_distance_per_vehicle: int = 100000
     ):
         """
@@ -49,10 +49,11 @@ class VRPOptimizer:
         # Validações
         self._validate_inputs()
         
-        # Objetos do OR-Tools
-        self.manager = None
-        self.routing = None
-        self.solution = None
+        # Objetos do OR-Tools: o pacote não publica stubs de tipo, e estes
+        # só são preenchidos em solve().
+        self.manager: Any = None
+        self.routing: Any = None
+        self.solution: Any = None
         
     def _validate_inputs(self):
         """Valida os dados de entrada."""
@@ -68,7 +69,7 @@ class VRPOptimizer:
         if self.demands and len(self.demands) != self.num_locations:
             raise ValueError("Número de demandas deve corresponder ao número de localizações")
     
-    def _create_data_model(self) -> Dict:
+    def _create_data_model(self) -> dict:
         """Cria o modelo de dados para o OR-Tools."""
         data = {
             'distance_matrix': self.distance_matrix.tolist(),
@@ -112,6 +113,8 @@ class VRPOptimizer:
         Returns:
             Demanda do nó
         """
+        if self.demands is None:
+            raise ValueError("_demand_callback exige que demands tenha sido informado")
         from_node = self.manager.IndexToNode(from_index)
         return self.demands[from_node]
     
@@ -119,7 +122,7 @@ class VRPOptimizer:
         self,
         time_limit_seconds: int = 30,
         strategy: str = 'PATH_CHEAPEST_ARC',
-        local_search: Optional[str] = 'GUIDED_LOCAL_SEARCH'
+        local_search: str | None = 'GUIDED_LOCAL_SEARCH'
     ) -> bool:
         import time
         start_time = time.time()
@@ -186,12 +189,18 @@ class VRPOptimizer:
         # Estratégia de primeira solução
         strategy_map = {
             'PATH_CHEAPEST_ARC': routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC,
-            'PATH_MOST_CONSTRAINED_ARC': routing_enums_pb2.FirstSolutionStrategy.PATH_MOST_CONSTRAINED_ARC,
+            'PATH_MOST_CONSTRAINED_ARC': (
+                routing_enums_pb2.FirstSolutionStrategy.PATH_MOST_CONSTRAINED_ARC
+            ),
             'SAVINGS': routing_enums_pb2.FirstSolutionStrategy.SAVINGS,
             'SWEEP': routing_enums_pb2.FirstSolutionStrategy.SWEEP,
             'CHRISTOFIDES': routing_enums_pb2.FirstSolutionStrategy.CHRISTOFIDES,
-            'PARALLEL_CHEAPEST_INSERTION': routing_enums_pb2.FirstSolutionStrategy.PARALLEL_CHEAPEST_INSERTION,
-            'LOCAL_CHEAPEST_INSERTION': routing_enums_pb2.FirstSolutionStrategy.LOCAL_CHEAPEST_INSERTION,
+            'PARALLEL_CHEAPEST_INSERTION': (
+                routing_enums_pb2.FirstSolutionStrategy.PARALLEL_CHEAPEST_INSERTION
+            ),
+            'LOCAL_CHEAPEST_INSERTION': (
+                routing_enums_pb2.FirstSolutionStrategy.LOCAL_CHEAPEST_INSERTION
+            ),
         }
         search_parameters.first_solution_strategy = strategy_map.get(
             strategy, 
@@ -201,10 +210,16 @@ class VRPOptimizer:
         # Metaheurística de busca local
         if local_search:
             local_search_map = {
-                'GUIDED_LOCAL_SEARCH': routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH,
-                'SIMULATED_ANNEALING': routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING,
+                'GUIDED_LOCAL_SEARCH': (
+                    routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
+                ),
+                'SIMULATED_ANNEALING': (
+                    routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING
+                ),
                 'TABU_SEARCH': routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH,
-                'GENERIC_TABU_SEARCH': routing_enums_pb2.LocalSearchMetaheuristic.GENERIC_TABU_SEARCH,
+                'GENERIC_TABU_SEARCH': (
+                    routing_enums_pb2.LocalSearchMetaheuristic.GENERIC_TABU_SEARCH
+                ),
             }
             search_parameters.local_search_metaheuristic = local_search_map.get(
                 local_search,
@@ -226,7 +241,7 @@ class VRPOptimizer:
         # Retornar se encontrou solução
         return self.solution is not None
     
-    def get_routes(self) -> List[List[int]]:
+    def get_routes(self) -> list[list[int]]:
         """
         Extrai as rotas da solução.
         
@@ -255,7 +270,7 @@ class VRPOptimizer:
         
         return routes
     
-    def get_route_distance(self, route: List[int]) -> float:
+    def get_route_distance(self, route: list[int]) -> float:
         """
         Calcula a distância total de uma rota.
         
@@ -270,7 +285,7 @@ class VRPOptimizer:
             distance += self.distance_matrix[route[i]][route[i + 1]]
         return distance
     
-    def get_metrics(self) -> Dict:
+    def get_metrics(self) -> dict:
         """
         Calcula métricas da solução.
         
@@ -281,8 +296,8 @@ class VRPOptimizer:
             return {}
         
         routes = self.get_routes()
-        total_distance = 0
-        max_route_distance = 0
+        total_distance = 0.0
+        max_route_distance = 0.0
         route_distances = []
         
         for route in routes:
@@ -323,7 +338,7 @@ class VRPOptimizer:
         routes = metrics['routes']
         
         print(f"\n{'='*60}")
-        print(f"SOLUÇÃO DE ROTEAMENTO")
+        print("SOLUÇÃO DE ROTEAMENTO")
         print(f"{'='*60}")
         print(f"Valor Objetivo: {metrics['objective_value']}")
         print(f"Distância Total: {metrics['total_distance']/1000:.2f} km")
@@ -339,7 +354,10 @@ class VRPOptimizer:
             
             if 'route_loads' in metrics:
                 load = metrics['route_loads'][vehicle_id]
-                capacity = self.vehicle_capacities[vehicle_id] if vehicle_id < len(self.vehicle_capacities) else 'N/A'
+                if self.vehicle_capacities and vehicle_id < len(self.vehicle_capacities):
+                    capacity = str(self.vehicle_capacities[vehicle_id])
+                else:
+                    capacity = 'N/A'
                 print(f"  Carga: {load}/{capacity}")
             
             print()

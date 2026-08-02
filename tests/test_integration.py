@@ -94,5 +94,5 @@ def test_cvrp_pipeline_with_example_csv():
     ]
     assert sorted(visited) == list(range(1, len(locations)))
 
-    for load, capacity in zip(metrics['route_loads'], capacities):
+    for load, capacity in zip(metrics['route_loads'], capacities, strict=False):
         assert load <= capacity
