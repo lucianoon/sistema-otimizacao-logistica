@@ -1,4 +1,4 @@
-streamlit==1.31.0
+streamlit==1.54.0
 pandas==2.1.4
 numpy==1.26.3
 ortools==9.8.3296
