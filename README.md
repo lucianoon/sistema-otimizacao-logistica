@@ -136,6 +136,15 @@ streamlit run app.py
 http://localhost:8501
 ```
 
+### Alternativa: Docker
+
+```bash
+docker compose up --build
+# Acesse http://localhost:8501
+```
+
+Os dados de entrada em `./data` são montados como volume — editar arquivos não exige rebuild.
+
 ## 🚀 Como Usar
 
 ### 1. Entrada de Dados

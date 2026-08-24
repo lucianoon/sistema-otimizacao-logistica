@@ -1,0 +1,10 @@
+services:
+  otimizador:
+    build: .
+    image: sistema-otimizacao-logistica:latest
+    ports:
+      - "8501:8501"
+    volumes:
+      # Dados de entrada editáveis sem rebuild (clientes, rotas etc.)
+      - ./data:/app/data
+    restart: unless-stopped
