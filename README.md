@@ -10,20 +10,6 @@ Sistema completo de otimização de rotas de veículos (VRP - Vehicle Routing Pr
 ![OR-Tools](https://img.shields.io/badge/OR--Tools-9.8-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 📋 Índice
-
-- [Visão Geral](#visão-geral)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Instalação](#instalação)
-- [Como Usar](#como-usar)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Testes](#testes)
-- [Exemplos](#exemplos)
-- [Casos de Uso](#casos-de-uso)
-- [Contribuindo](#contribuindo)
-- [Licença](#licença)
-
 ## 🎯 Visão Geral
 
 Este sistema resolve o **Problema de Roteamento de Veículos (VRP)**, um dos problemas mais importantes em logística e otimização combinatória. O objetivo é encontrar as rotas mais eficientes para uma frota de veículos que precisa atender um conjunto de clientes, minimizando custos operacionais e maximizando a eficiência.
@@ -219,40 +205,6 @@ Ajuste os valores conforme sua realidade:
 - Baixe em formato CSV ou Excel
 - Use os dados em outros sistemas
 
-## 📁 Estrutura do Projeto
-
-```
-sistema-otimizacao-logistica/
-├── app.py                          # Aplicação principal Streamlit
-├── compare_algorithms.py           # Benchmark OR-Tools vs Nearest Neighbor
-├── requirements.txt                # Dependências do projeto
-├── packages.txt                    # Pacotes de sistema (deploy Streamlit Cloud)
-├── pytest.ini                      # Configuração do pytest
-│
-├── modules/                        # Módulos do sistema
-│   ├── optimizer.py                # Lógica de otimização VRP (OR-Tools)
-│   ├── nearest_neighbor.py         # Baseline Nearest Neighbor
-│   ├── cost_calculator.py          # Cálculo de custos
-│   ├── data_handler.py             # Manipulação de dados
-│   └── visualizer.py               # Visualizações e mapas
-│
-├── data/
-│   └── exemplo_clientes.csv        # Dados de exemplo
-│
-├── tests/                          # Suíte pytest
-│   ├── test_optimizer.py
-│   ├── test_nearest_neighbor.py
-│   ├── test_cost_calculator.py
-│   ├── test_data_handler.py
-│   └── test_integration.py
-│
-├── QUICKSTART.md                   # Guia rápido
-├── EXEMPLO_USO.md                  # Passo a passo de uso
-├── ENTRADA_MANUAL.md               # Guia de entrada manual de dados
-├── GUIA_ADICIONAR_ALGORITMOS.md    # Guia para adicionar algoritmos
-└── DEPLOY.md                       # Notas de deploy
-```
-
 ## 🧪 Testes
 
 O projeto possui uma suíte de testes automatizados com **pytest** em `tests/`, cobrindo o cálculo de custos, a manipulação de dados, a heurística Nearest Neighbor e o otimizador OR-Tools. Os testes rodam automaticamente no GitHub Actions a cada push e pull request.
@@ -311,32 +263,11 @@ pytest
 - Tempo total: 9h 30min
 - Veículos utilizados: 3/3
 
-## 🎯 Casos de Uso
+## Casos de uso
 
-### 1. E-commerce e Varejo
-- Entregas last-mile
-- Distribuição para lojas
-- Coleta de produtos
-
-### 2. Logística Agrícola
-- Distribuição de insumos
-- Coleta de produção
-- Transporte de equipamentos
-
-### 3. Indústria
-- Distribuição para distribuidores
-- Coleta de matéria-prima
-- Logística reversa
-
-### 4. Serviços
-- Rotas de técnicos
-- Coleta de resíduos
-- Transporte de pessoal
-
-### 5. Setor Público
-- Rotas de ônibus escolares
-- Coleta de lixo
-- Entregas de correspondência
+O mesmo modelo de CVRP atende last-mile de e-commerce, distribuição e coleta
+agrícola, logística industrial e reversa, roteirização de técnicos e rotas do
+setor público (transporte escolar, coleta de resíduos).
 
 ## 🔧 Configurações Avançadas
 
@@ -385,28 +316,7 @@ O sistema calcula automaticamente:
 - Equivalente em árvores
 - Economia vs cenário não otimizado
 
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Para contribuir:
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📝 Roadmap
-
-- [ ] Adicionar suporte a janelas de tempo (VRPTW)
-- [ ] Implementar múltiplos depósitos (MDVRP)
-- [ ] Integração com APIs de roteamento real
-- [ ] Suporte a pickup and delivery
-- [ ] Otimização em tempo real
-- [ ] Dashboard gerencial
-- [ ] API REST
-- [ ] Aplicativo mobile
-
-## 🐛 Problemas Conhecidos
+## Limitações conhecidas
 
 - Grandes instâncias (>50 localizações) podem demorar mais para otimizar
 - Mapas podem ficar lentos com muitas rotas
@@ -415,18 +325,6 @@ Contribuições são bem-vindas! Para contribuir:
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
-## 🙏 Agradecimentos
-
-- Google OR-Tools pela excelente biblioteca de otimização
-- Comunidade Streamlit pelo framework incrível
-- OpenStreetMap pelos dados de mapas
-
-## 📞 Contato
-
-Para dúvidas, sugestões ou suporte:
-- Abra uma issue no GitHub
-- Entre em contato via email
 
 ---
 

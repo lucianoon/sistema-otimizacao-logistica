@@ -12,20 +12,6 @@ in Brazil.
 ![OR-Tools](https://img.shields.io/badge/OR--Tools-9.8-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 📋 Table of contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech stack](#️-tech-stack)
-- [Installation](#-installation)
-- [How to use](#-how-to-use)
-- [Project structure](#-project-structure)
-- [Tests](#-tests)
-- [Worked examples](#-worked-examples)
-- [Use cases](#-use-cases)
-- [Contributing](#-contributing)
-- [License](#-license)
-
 ## 🎯 Overview
 
 This system solves the **Vehicle Routing Problem (VRP)**, one of the most
@@ -222,42 +208,6 @@ Adjust the values to match your reality:
 - Download as CSV or Excel
 - Feed the data into other systems
 
-## 📁 Project structure
-
-```
-sistema-otimizacao-logistica/
-├── app.py                          # Main Streamlit application
-├── compare_algorithms.py           # OR-Tools vs. Nearest Neighbor benchmark
-├── requirements.txt                # Project dependencies
-├── packages.txt                    # System packages (Streamlit Cloud deploy)
-├── pytest.ini                      # pytest configuration
-│
-├── modules/                        # System modules
-│   ├── optimizer.py                # VRP optimization logic (OR-Tools)
-│   ├── nearest_neighbor.py         # Nearest Neighbor baseline
-│   ├── cost_calculator.py          # Cost calculation
-│   ├── data_handler.py             # Data handling
-│   └── visualizer.py               # Visualizations and maps
-│
-├── data/
-│   └── exemplo_clientes.csv        # Sample customer data
-│
-├── tests/                          # pytest suite
-│   ├── test_optimizer.py
-│   ├── test_nearest_neighbor.py
-│   ├── test_cost_calculator.py
-│   ├── test_data_handler.py
-│   └── test_integration.py
-│
-├── QUICKSTART.md                   # Quick start guide
-├── EXEMPLO_USO.md                  # Usage walkthrough
-├── ENTRADA_MANUAL.md               # Manual data entry guide
-├── GUIA_ADICIONAR_ALGORITMOS.md    # Guide to adding new algorithms
-└── DEPLOY.md                       # Deployment notes
-```
-
-The five guides above are in Portuguese.
-
 ## 🧪 Tests
 
 The project has an automated **pytest** suite in `tests/` covering cost
@@ -313,32 +263,11 @@ total cost in R$, total time, and CO2 saved.
 **Output shape**: total distance, total cost in R$, total time, and vehicles
 used out of vehicles available.
 
-## 🎯 Use cases
+## Use cases
 
-### 1. E-commerce and retail
-- Last-mile delivery
-- Store replenishment
-- Product pickup
-
-### 2. Agricultural logistics
-- Input distribution
-- Harvest collection
-- Equipment transport
-
-### 3. Industry
-- Distribution to distributors
-- Raw material collection
-- Reverse logistics
-
-### 4. Services
-- Technician routes
-- Waste collection
-- Staff transport
-
-### 5. Public sector
-- School bus routes
-- Refuse collection
-- Mail delivery
+The same CVRP model covers e-commerce last-mile, agricultural distribution and
+collection, industrial and reverse logistics, field-technician routing and
+public-sector routes (school transport, waste collection).
 
 ## 🔧 Advanced configuration
 
@@ -391,28 +320,7 @@ The system computes automatically:
 - Tree equivalent
 - Savings vs. the unoptimized scenario
 
-## 🤝 Contributing
-
-Contributions are welcome. To contribute:
-
-1. Fork the project
-2. Create a branch for your feature (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 Roadmap
-
-- [ ] Time windows (VRPTW)
-- [ ] Multiple depots (MDVRP)
-- [ ] Integration with real routing APIs
-- [ ] Pickup and delivery
-- [ ] Real-time optimization
-- [ ] Management dashboard
-- [ ] REST API
-- [ ] Mobile app
-
-## 🐛 Known issues
+## Known limitations
 
 - Large instances (>50 locations) take longer to optimize
 - Maps can get slow with many routes
@@ -422,16 +330,6 @@ Contributions are welcome. To contribute:
 ## 📄 License
 
 This project is under the MIT license. See the `LICENSE` file for details.
-
-## 🙏 Acknowledgements
-
-- Google OR-Tools for the excellent optimization library
-- The Streamlit community for the framework
-- OpenStreetMap for the map data
-
-## 📞 Contact
-
-For questions, suggestions or support, open an issue on GitHub.
 
 ---
 
