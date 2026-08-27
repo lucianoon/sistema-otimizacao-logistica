@@ -314,6 +314,9 @@ if data is not None:
     )
     
     # Parâmetros específicos do OR-Tools
+    strategy: str
+    local_search: str | None
+    time_limit: int
     if algorithm == "OR-Tools (Recomendado)":
         with st.sidebar.expander("⚙️ Parâmetros Avançados OR-Tools"):
             strategy = st.selectbox(
