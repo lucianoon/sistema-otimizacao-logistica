@@ -322,6 +322,16 @@ O sistema calcula automaticamente:
 - Mapas podem ficar lentos com muitas rotas
 - Exportação de mapas grandes pode consumir memória
 
+## 📚 Documentação
+
+Guias detalhados ficam em [`docs/`](docs/):
+
+- [`QUICKSTART.md`](docs/QUICKSTART.md): do clone à primeira otimização em poucos minutos
+- [`EXEMPLO_USO.md`](docs/EXEMPLO_USO.md): como escolher e comparar os algoritmos disponíveis no seletor
+- [`ENTRADA_MANUAL.md`](docs/ENTRADA_MANUAL.md): como adicionar localizações manualmente na interface
+- [`GUIA_ADICIONAR_ALGORITMOS.md`](docs/GUIA_ADICIONAR_ALGORITMOS.md): interface para plugar novos algoritmos
+- [`DEPLOY.md`](docs/DEPLOY.md): opções de deploy permanente e configurações necessárias
+
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.

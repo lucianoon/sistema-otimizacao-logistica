@@ -279,7 +279,7 @@ Edit `modules/optimizer.py` to adjust:
 - Optimization time limit
 - Search parameters
 
-See [`GUIA_ADICIONAR_ALGORITMOS.md`](GUIA_ADICIONAR_ALGORITMOS.md) (in
+See [`GUIA_ADICIONAR_ALGORITMOS.md`](docs/GUIA_ADICIONAR_ALGORITMOS.md) (in
 Portuguese) for the interface a new algorithm must implement.
 
 ### Adding constraints
@@ -326,6 +326,16 @@ The system computes automatically:
 - Maps can get slow with many routes
 - Exporting large maps can consume a lot of memory
 - Distances are geometric, not road-network distances
+
+## 📚 Documentation
+
+Detailed guides (in Portuguese) live in [`docs/`](docs/):
+
+- [`QUICKSTART.md`](docs/QUICKSTART.md): from clone to first optimization in minutes
+- [`EXEMPLO_USO.md`](docs/EXEMPLO_USO.md): how to pick and compare the algorithms in the selector
+- [`ENTRADA_MANUAL.md`](docs/ENTRADA_MANUAL.md): how to add locations manually in the UI
+- [`GUIA_ADICIONAR_ALGORITMOS.md`](docs/GUIA_ADICIONAR_ALGORITMOS.md): interface a new algorithm must implement
+- [`DEPLOY.md`](docs/DEPLOY.md): permanent deployment options and required settings
 
 ## 📄 License
 
