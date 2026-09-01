@@ -117,7 +117,9 @@ venv\Scripts\activate  # Windows
 
 3. **Install the dependencies**
 ```bash
-pip install -r requirements.txt
+uv sync --locked                 # same versions as CI and the Docker image
+# without uv:
+pip install -r requirements.txt  # exported from uv.lock
 ```
 
 4. **Run the system**
@@ -218,10 +220,10 @@ GitHub Actions on every push and pull request.
 To run them locally:
 
 ```bash
-pip install -r requirements.txt pytest ruff mypy
-ruff check .    # lint
-mypy            # type check
-pytest
+uv sync --locked
+uv run ruff check .    # lint
+uv run mypy            # type checking
+uv run pytest
 ```
 
 ## 💡 Worked examples
