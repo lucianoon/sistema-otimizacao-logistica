@@ -46,5 +46,5 @@ tzdata==2026.3
 urllib3==2.7.0
 uvicorn==0.52.4
 watchdog==6.0.0 ; sys_platform != 'darwin'
-websockets==16.1.1
+websockets==17.1
 xyzservices==2026.3.0
