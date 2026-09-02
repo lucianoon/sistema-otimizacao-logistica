@@ -109,7 +109,9 @@ venv\Scripts\activate  # Windows
 
 3. **Instale as dependências**
 ```bash
-pip install -r requirements.txt
+uv sync --locked                 # mesmas versões do CI e da imagem Docker
+# alternativa sem uv:
+pip install -r requirements.txt  # arquivo exportado do uv.lock
 ```
 
 4. **Execute o sistema**
@@ -212,10 +214,10 @@ O projeto possui uma suíte de testes automatizados com **pytest** em `tests/`, 
 Para rodar localmente:
 
 ```bash
-pip install -r requirements.txt pytest ruff mypy
-ruff check .    # lint
-mypy            # checagem de tipos
-pytest
+uv sync --locked
+uv run ruff check .    # lint
+uv run mypy            # checagem de tipos
+uv run pytest
 ```
 
 ## 💡 Exemplos
